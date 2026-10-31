@@ -210,7 +210,7 @@ export class PdfCore {
       const size = P.PDFiumExt_GetFileWriterSize(w);
       const ptr = P.pdfium.wasmExports.malloc(size);
       P.PDFiumExt_GetFileWriterData(w, ptr, size);
-      const out = P.pdfium.HEAPU8.slice(ptr, ptr + size);
+      const out = (P.pdfium as unknown as { HEAPU8: Uint8Array }).HEAPU8.slice(ptr, ptr + size);
       P.pdfium.wasmExports.free(ptr);
       return out;
     } finally {
